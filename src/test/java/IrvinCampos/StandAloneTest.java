@@ -53,6 +53,8 @@ public class StandAloneTest {
         String confirmMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
         Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
 
+        System.out.println(driver.findElement(By.cssSelector("Confirmation Number label[class='ng-star-inserted']")).getText());
+
         driver.close();
     }
 }
