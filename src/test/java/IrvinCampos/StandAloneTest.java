@@ -1,5 +1,7 @@
 package IrvinCampos;
 
+import IrvinCampos.PageObjects.LandingPage;
+import IrvinCampos.PageObjects.ProductCatalogue;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,20 +22,28 @@ public class StandAloneTest {
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        driver.get("https://rahulshettyacademy.com/client/");
-        driver.findElement(By.id("userEmail")).sendKeys("cozy@gmail.com");
-        driver.findElement(By.id("userPassword")).sendKeys("Atgatgnite1!");
-        driver.findElement(By.id("login")).click();
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
-        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
+//        driver.get("https://rahulshettyacademy.com/client/");
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.goTo();
+        landingPage.loginApplication("cozy@gmail.com","Atgatgnite1!");
+//        driver.findElement(By.id("userEmail")).sendKeys("cozy@gmail.com");
+//        driver.findElement(By.id("userPassword")).sendKeys("Atgatgnite1!");
+//        driver.findElement(By.id("login")).click();
 
-        WebElement prod = products.stream().filter(product ->
-                product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
-        driver.findElement(By.cssSelector(".card-body button:last-of-type")).click();
+//        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-3")));
+//        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
+        ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+        List<WebElement> products = productCatalogue.getProductList();
 
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("toast-container"))));
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
+//        WebElement prod = products.stream().filter(product ->
+//                product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
+//        driver.findElement(By.cssSelector(".card-body button:last-of-type")).click();
+
+        productCatalogue.addProductToCart(productName);
+
+//        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("toast-container"))));
+//        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
 //        ng-animating
         driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
 
@@ -46,7 +56,7 @@ public class StandAloneTest {
 
         Actions actions = new Actions(driver);
         actions.sendKeys(driver.findElement(By.cssSelector("[placeholder='Select Country']")),"uni").build().perform();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
         driver.findElement(By.xpath("(//button[contains(.,'United States')])[1]")).click();
         driver.findElement(By.cssSelector(".actions a")).click();
 
