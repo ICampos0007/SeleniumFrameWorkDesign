@@ -1,6 +1,7 @@
 package IrvinCampos;
 
 import IrvinCampos.PageObjects.*;
+import IrvinCampos.TestComponents.BaseTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,20 +10,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
-public class SubmitOrderTest {
-    public static void main(String[] args) {
+public class SubmitOrderTest extends BaseTest {
+    @Test
+    public void submitOrder() throws IOException {
         String productName = "ZARA COAT 3";
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-        LandingPage landingPage = new LandingPage(driver);
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
-        landingPage.goTo();
+        LandingPage landingPage = launchApplication();
         ProductCatalogue productCatalogue = landingPage.loginApplication("cozy@gmail.com", "Atgatgnite1!");
 
         List<WebElement> products = productCatalogue.getProductList();
