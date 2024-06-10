@@ -20,7 +20,7 @@ public class SubmitOrderTest extends BaseTest {
     @Test
     public void submitOrder() throws IOException {
         String productName = "ZARA COAT 3";
-        LandingPage landingPage = launchApplication();
+//        LandingPage landingPage = launchApplication();
         ProductCatalogue productCatalogue = landingPage.loginApplication("cozy@gmail.com", "Atgatgnite1!");
 
         List<WebElement> products = productCatalogue.getProductList();
