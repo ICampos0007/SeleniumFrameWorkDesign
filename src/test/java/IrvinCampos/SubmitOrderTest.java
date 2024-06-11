@@ -1,5 +1,6 @@
 package IrvinCampos;
 
+import IrvinCampos.AbstractComponents.OrderPage;
 import IrvinCampos.PageObjects.*;
 import IrvinCampos.TestComponents.BaseTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -17,9 +18,9 @@ import java.time.Duration;
 import java.util.List;
 
 public class SubmitOrderTest extends BaseTest {
+    String productName = "ZARA COAT 3";
     @Test
     public void submitOrder() throws IOException {
-        String productName = "ZARA COAT 3";
 //        LandingPage landingPage = launchApplication();
         ProductCatalogue productCatalogue = landingPage.loginApplication("cozy@gmail.com", "Atgatgnite1!");
 
@@ -35,5 +36,12 @@ public class SubmitOrderTest extends BaseTest {
         String confirmMessage = confirmationPage.getVerifyConfirmationMessage();
         Assert.assertTrue(confirmMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
 
+    }
+
+    @Test(dependsOnMethods = {"submitOrder"})
+    public void orderHistoryTest() {
+        ProductCatalogue productCatalogue = landingPage.loginApplication("cozy@gmail.com", "Atgatgnite1!");
+        OrderPage orderPage = productCatalogue.goToOrderPage();
+        Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
     }
 }
