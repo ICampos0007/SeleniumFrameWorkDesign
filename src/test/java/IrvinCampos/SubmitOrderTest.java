@@ -3,11 +3,15 @@ package IrvinCampos;
 import IrvinCampos.AbstractComponents.OrderPage;
 import IrvinCampos.PageObjects.*;
 import IrvinCampos.TestComponents.BaseTest;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -39,22 +43,30 @@ public class SubmitOrderTest extends BaseTest {
         OrderPage orderPage = productCatalogue.goToOrderPage();
         Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
     }
+
+    public String getScreenShot(String testCaseName) throws IOException {
+       TakesScreenshot takesScreenshot = (TakesScreenshot)driver;
+       File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
+       File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+       FileUtils.copyFile(source,file);
+       return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
+    }
     @DataProvider
-    public Object[][] getData() {
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("email","cozy@gmail.com");
-        hashMap.put("password","Atgatgnite1!");
-        hashMap.put("product","ZARA COAT 3");
+    public Object[][] getData() throws IOException {
+//        HashMap<String,String> hashMap = new HashMap<>();
+//        hashMap.put("email","cozy@gmail.com");
+//        hashMap.put("password","Atgatgnite1!");
+//        hashMap.put("product","ZARA COAT 3");
+//
+//        HashMap<String,String> hashMapTwo = new HashMap<>();
+//        hashMapTwo.put("email","Miya@gmail.com");
+//        hashMapTwo.put("password","Jaymee1!");
+//        hashMapTwo.put("product","ADIDAS ORIGINAL");
 
-        HashMap<String,String> hashMapTwo = new HashMap<>();
-        hashMapTwo.put("email","Miya@gmail.com");
-        hashMapTwo.put("password","Jaymee1!");
-        hashMapTwo.put("product","ADIDAS ORIGINAL");
 
-
-
+        List<HashMap<String,String>> data = getJsonDataToMap(System.getProperty("user.dir") + "//src//test//java//IrvinCampos//data//PurchaseOrder.json");
         return new Object[][] {
-                {hashMap}, {hashMapTwo}
+                {data.get(0)}, {data.get(1)}
         };
     }
 }
