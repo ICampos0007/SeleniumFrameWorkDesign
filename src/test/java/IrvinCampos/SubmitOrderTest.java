@@ -43,14 +43,6 @@ public class SubmitOrderTest extends BaseTest {
         OrderPage orderPage = productCatalogue.goToOrderPage();
         Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
     }
-
-    public String getScreenShot(String testCaseName) throws IOException {
-       TakesScreenshot takesScreenshot = (TakesScreenshot)driver;
-       File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-       File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
-       FileUtils.copyFile(source,file);
-       return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
-    }
     @DataProvider
     public Object[][] getData() throws IOException {
 //        HashMap<String,String> hashMap = new HashMap<>();
