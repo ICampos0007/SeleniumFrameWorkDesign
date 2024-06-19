@@ -19,7 +19,7 @@ public class Listeners extends BaseTest implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
         extentTest = extentReports.createTest(result.getMethod().getMethodName());
-        extentTestThreadLocal.set(extentTest);
+        extentTestThreadLocal.set(extentTest); // Unique test ID
     }
 
     @Override
