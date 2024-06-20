@@ -38,14 +38,14 @@ public class BaseTest {
             e.printStackTrace();
             throw new IOException("Properties file not found at path: " + propertiesFilePath);
         }
-
-        String browserName = properties.getProperty("browser");
+        String browserName = System.getProperty("browser") != null ? System.getProperty("browser") : properties.getProperty("browser");
+//        String browserName = properties.getProperty("browser");
 
         if (browserName.contains("chrome")) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         } else if (browserName.contains("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
+            System.getProperty("webdriver.gecko.driver","Users/irvin/Desktop/selenium-server/geckodriver");
             driver = new FirefoxDriver();
         } else if (browserName.contains("edge")) {
             WebDriverManager.edgedriver().setup();
