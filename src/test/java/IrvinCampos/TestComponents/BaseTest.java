@@ -5,10 +5,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -42,8 +44,14 @@ public class BaseTest {
 //        String browserName = properties.getProperty("browser");
 
         if (browserName.contains("chrome")) {
+            ChromeOptions chromeOptions = new ChromeOptions();
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            if (browserName.contains("headless")) {
+                chromeOptions.addArguments("headless");
+            }
+            driver = new ChromeDriver(chromeOptions);
+            driver.manage().window().setSize(new Dimension(2560,1440)); // full screen
+//            driver.manage().window().maximize();
         } else if (browserName.contains("firefox")) {
             System.getProperty("webdriver.gecko.driver","Users/irvin/Desktop/selenium-server/geckodriver");
             driver = new FirefoxDriver();
