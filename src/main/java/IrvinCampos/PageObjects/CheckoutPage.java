@@ -16,15 +16,15 @@ public class CheckoutPage extends AbstractComponent {
         PageFactory.initElements(driver,this);
     }
     @FindBy(css = "[placeholder='Select Country']")
-    WebElement country;
+    private WebElement country;
 
     @FindBy(css = ".actions a")
-    WebElement submit;
+    private WebElement submit;
     //button[contains(.,'United States')])[1]
     @FindBy(xpath = "//button[@class='ta-item list-group-item ng-star-inserted'][6]")
-    WebElement countrySelect;
+    private WebElement countrySelect;
 
-    By results = By.cssSelector(".ta-results");
+    private By results = By.cssSelector(".ta-results");
 
     public void selectCountry(String countryName) {
         Actions actions = new Actions(driver);
