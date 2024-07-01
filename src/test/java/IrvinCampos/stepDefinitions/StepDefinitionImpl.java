@@ -2,7 +2,6 @@ package IrvinCampos.stepDefinitions;
 
 import IrvinCampos.PageObjects.*;
 import IrvinCampos.TestComponents.BaseTest;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -45,6 +44,11 @@ public class StepDefinitionImpl extends BaseTest {
     public void message_display_confirmationPage(String string) {
         String confirmMessage = confirmationPage.getVerifyConfirmationMessage();
         Assert.assertTrue(confirmMessage.equalsIgnoreCase(string));
+    }
+
+    @Then("{string} message is displayed$")
+    public void something_message_is_displayed(String stringarg1) throws Throwable {
+        Assert.assertEquals(stringarg1,landingPage.getErrorMessage());
     }
 
 }
